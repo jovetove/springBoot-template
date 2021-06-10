@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author jove
+ * @author zjianfa
+ * @Api swaggerAPI @Api: 描述类/接口的主要用途
  */
 @RestController
-/** swaggerAPI @Api: 描述类/接口的主要用途 */
 @Api(value = "系统首页", tags="首页模块")
 public class MainController {
 
