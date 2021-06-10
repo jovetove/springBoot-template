@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,10 +34,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("test").password(passwordEncoder().encode("123456")).roles("USER");
     }
 
+//    /**
+//     * 登录处理
+//     * @param http
+//     * @throws Exception
+//     */
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//
+//    }
+
+    /**
+     * 忽略拦截
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 设置拦截忽略url - 会直接过滤该url - 将不会经过Spring Security过滤器链
+        // web.ignoring().antMatchers("/getUserInfo");
+        // 设置拦截忽略文件夹，可以对静态资源放行
+        web.ignoring().antMatchers("/public/**", "/js/**");
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         // BCryptPasswordEncoder：Spring Security 提供的加密工具，可快速实现加密加盐
         return new BCryptPasswordEncoder();
     }
-
 }
